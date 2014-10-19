@@ -47,5 +47,5 @@
                                      ["-x" "Something ironworker sticks in"]
                                      ["-y" "Something ironworker sticks in"])]
     (println (pr-str options))
-    (println (:payload options))
+    (println (:panyload options))
     (process (:payload options))))
