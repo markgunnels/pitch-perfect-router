@@ -1,4 +1,0 @@
-# define the runtime language
-runtime "java"
-# exec is the file that will be executed:
-exec "pitch-perfect-router-standalone.jar"

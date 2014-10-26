@@ -1,8 +1,19 @@
 (ns pitch-perfect-router.core
   (:require [clojure.tools.cli :as c]
             [clojure.data.json :as json]
+            [pitch-perfect-core.events :refer [create-and-post]]
             [ring.util.codec :refer :all])
   (:gen-class))
+
+;; {ToCountry US, NumMedia 0, ToState SC, FromZip 29209, ToCity , Body Test, SmsSid SMe96074ea1448df56d0bd526f13df7222, AccountSid ACfa4cb64673612f0fdbc16122eec3fa55, SmsStatus received, To +18036023046, FromState SC, ToZip , SmsMessageSid SMe96074ea1448df56d0bd526f13df7222, MessageSid SMe96074ea1448df56d0bd526f13df7222, FromCountry US, From +18037385811, ApiVersion 2010-04-01, FromCity COLUMBIA}
+;; context subject predicate object
+
+(defn submit
+  [m]
+  (create-and-post m
+                   (get m "From")
+                   "texted"
+                   (get m "Body")))
 
 (defn query-string-to-map
   [query-string]
@@ -17,7 +28,7 @@
   (-> file-name
       slurp
       form-decode
-      println))
+      submit))
 
 (defn -main
   "The application's main function"
@@ -27,6 +38,7 @@
                                      ["-d" "Something ironworker sticks in"]
                                      ["-id" "Something ironworker sticks in"]
                                      ["-e" "Something ironworker sticks in"]
+                                     ["-config" "Something ironworker sticks in"]
                                      ["-f" "Something ironworker sticks in"]
                                      ["-g" "Something ironworker sticks in"]
                                      ["-h" "Something ironworker sticks in"]
